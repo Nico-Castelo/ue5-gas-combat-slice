@@ -8,11 +8,15 @@
 # Notes (local — Looman mirror, STATUS, ASSETS)
 Notes/
 
-# AI assistant instructions
+# AI assistant instructions (local)
 CLAUDE.md
 AGENTS.md
 .cursor/
 .claude/
+
+# Third-party Fab packs (license — never commit)
+Content/Sword_Animations/
+Content/SlashTrail_SoftTofu/
 
 # Compiled Object files
 *.slo
