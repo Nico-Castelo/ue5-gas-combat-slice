@@ -6,10 +6,16 @@
 #include "EnhancedInputComponent.h"
 #include "InputAction.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
 ABladePlayerCharacter::ABladePlayerCharacter()
 {
+	bUseControllerRotationYaw = false;
+	
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f);
+	
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
 	SpringArmComponent->SetupAttachment(RootComponent);
 	SpringArmComponent->bUsePawnControlRotation = true;
@@ -28,7 +34,7 @@ void ABladePlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	EnhancedInput->BindAction(Input_Look, ETriggerEvent::Triggered, this, &ABladePlayerCharacter::Look);
 	
 	EnhancedInput->BindAction(Input_Jump, ETriggerEvent::Started, this, &ABladePlayerCharacter::Jump);
-	EnhancedInput->BindAction(Input_Jump, ETriggerEvent::Completed, this, &ABladePlayerCharacter::StopJumping);
+	EnhancedInput->BindAction(Input_Jump, ETriggerEvent::Completed, this, &ABladePlayerCharacter::StopJumping);	
 }
 
 void ABladePlayerCharacter::Move(const FInputActionValue& InValue)
