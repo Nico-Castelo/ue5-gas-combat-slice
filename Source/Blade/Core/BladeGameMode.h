@@ -4,14 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "BladeGameModeBase.generated.h"
+#include "BladeGameMode.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class BLADE_API ABladeGameModeBase : public AGameModeBase
+class BLADE_API ABladeGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
 };
