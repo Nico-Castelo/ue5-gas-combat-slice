@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "Core/BladeCharacterBase.h"
 #include "BladePlayerCharacter.generated.h"
 
 struct FInputActionValue;
@@ -12,7 +12,7 @@ class USpringArmComponent;
 class UCameraComponent;
 
 UCLASS()
-class BLADE_API ABladePlayerCharacter : public ACharacter
+class BLADE_API ABladePlayerCharacter : public ABladeCharacterBase
 {
 	GENERATED_BODY()
 
