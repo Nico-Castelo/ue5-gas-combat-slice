@@ -24,6 +24,12 @@ public:
 	
 protected:
 	
+	void Move(const FInputActionValue& InValue);
+	
+	void Look(const FInputActionValue& InValue);
+	
+	void Roll();
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UInputAction> Input_Move;
 	
@@ -33,14 +39,14 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UInputAction> Input_Jump;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputAction> Input_Roll;
+	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UCameraComponent> CameraComponent;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
-	
-	void Move(const FInputActionValue& InValue);
-	
-	void Look(const FInputActionValue& InValue);
+
 
 };

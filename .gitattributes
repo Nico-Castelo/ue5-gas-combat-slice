@@ -1,0 +1,14 @@
+# Normaliza saltos de línea en archivos de texto (C++, .cs, .ini)
+* text=auto
+
+# Binarios de Unreal
+*.uasset binary
+*.umap   binary
+*.uexp   binary
+*.ubulk  binary
+
+# Media binaria por si se commitea algo suelto
+*.fbx binary
+*.png binary
+*.tga binary
+*.wav binary

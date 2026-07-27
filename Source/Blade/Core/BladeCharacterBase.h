@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "BladeCharacterBase.generated.h"
 
+class UGameplayAbility;
 class UBladeAttributeSet;
 class UAbilitySystemComponent;
 
@@ -30,4 +31,7 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, Category = "Ability System")
 	TObjectPtr<UBladeAttributeSet> AttributeSet;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Ability System")
+	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
 };

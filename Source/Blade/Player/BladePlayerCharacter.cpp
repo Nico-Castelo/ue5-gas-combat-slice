@@ -3,6 +3,8 @@
 
 #include "BladePlayerCharacter.h"
 
+#include "AbilitySystemComponent.h"
+#include "BladeGameplayTags.h"
 #include "EnhancedInputComponent.h"
 #include "InputAction.h"
 #include "Camera/CameraComponent.h"
@@ -35,6 +37,8 @@ void ABladePlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	
 	EnhancedInput->BindAction(Input_Jump, ETriggerEvent::Started, this, &ABladePlayerCharacter::Jump);
 	EnhancedInput->BindAction(Input_Jump, ETriggerEvent::Completed, this, &ABladePlayerCharacter::StopJumping);	
+	
+	EnhancedInput->BindAction(Input_Roll, ETriggerEvent::Triggered, this, &ABladePlayerCharacter::Roll);
 }
 
 void ABladePlayerCharacter::Move(const FInputActionValue& InValue)
@@ -61,4 +65,9 @@ void ABladePlayerCharacter::Look(const FInputActionValue& InValue)
 	
 	AddControllerPitchInput(InputValue.Y);
 	AddControllerYawInput(InputValue.X);
+}
+
+void ABladePlayerCharacter::Roll()
+{
+	ASC->TryActivateAbilitiesByTag(FGameplayTagContainer(BladeGameplayTags::Ability_Roll));
 }
