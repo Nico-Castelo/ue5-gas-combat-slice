@@ -34,4 +34,7 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Ability System")
 	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Combat");
+	TObjectPtr<UStaticMeshComponent> WeaponMesh;
 };

@@ -38,7 +38,7 @@ void ABladePlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	EnhancedInput->BindAction(Input_Jump, ETriggerEvent::Started, this, &ABladePlayerCharacter::Jump);
 	EnhancedInput->BindAction(Input_Jump, ETriggerEvent::Completed, this, &ABladePlayerCharacter::StopJumping);	
 	
-	EnhancedInput->BindAction(Input_Roll, ETriggerEvent::Triggered, this, &ABladePlayerCharacter::Roll);
+	EnhancedInput->BindAction(Input_Evade, ETriggerEvent::Triggered, this, &ABladePlayerCharacter::Evade);
 }
 
 void ABladePlayerCharacter::Move(const FInputActionValue& InValue)
@@ -67,7 +67,7 @@ void ABladePlayerCharacter::Look(const FInputActionValue& InValue)
 	AddControllerYawInput(InputValue.X);
 }
 
-void ABladePlayerCharacter::Roll()
+void ABladePlayerCharacter::Evade()
 {
-	ASC->TryActivateAbilitiesByTag(FGameplayTagContainer(BladeGameplayTags::Ability_Roll));
+	ASC->TryActivateAbilitiesByTag(FGameplayTagContainer(BladeGameplayTags::Ability_Evade));
 }

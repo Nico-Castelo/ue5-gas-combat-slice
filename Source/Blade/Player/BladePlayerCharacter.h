@@ -28,7 +28,7 @@ protected:
 	
 	void Look(const FInputActionValue& InValue);
 	
-	void Roll();
+	void Evade();
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UInputAction> Input_Move;
@@ -40,7 +40,7 @@ protected:
 	TObjectPtr<UInputAction> Input_Jump;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	TObjectPtr<UInputAction> Input_Roll;
+	TObjectPtr<UInputAction> Input_Evade;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UCameraComponent> CameraComponent;
