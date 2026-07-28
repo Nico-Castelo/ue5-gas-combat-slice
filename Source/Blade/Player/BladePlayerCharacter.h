@@ -28,6 +28,8 @@ protected:
 	
 	void Look(const FInputActionValue& InValue);
 	
+	void Attack();
+	
 	void Evade();
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
@@ -41,6 +43,9 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UInputAction> Input_Evade;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputAction> Input_Attack;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UCameraComponent> CameraComponent;

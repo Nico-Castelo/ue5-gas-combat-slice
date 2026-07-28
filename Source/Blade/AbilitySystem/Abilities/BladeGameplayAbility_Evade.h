@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Abilities/GameplayAbility.h"
+#include "BladeGameplayAbility.h"
 #include "BladeGameplayAbility_Evade.generated.h"
 
 class UAnimMontage;
 
 UCLASS()
-class BLADE_API UBladeGameplayAbility_Evade : public UGameplayAbility
+class BLADE_API UBladeGameplayAbility_Evade : public UBladeGameplayAbility
 {
 	GENERATED_BODY()
 
@@ -23,13 +23,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Evade")
 	TObjectPtr<UAnimMontage> EvadeMontage;
-
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Evade", meta = (ClampMin = "0.0"))
 	float RootMotionScale = 1.25f;
-
-	UFUNCTION()
-	void OnMontageCompleted();
-
-	UFUNCTION()
-	void OnMontageCancelled();
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Evade", meta = (ClampMin = "0.0"))
+	float Rate = 1.0f;
 };

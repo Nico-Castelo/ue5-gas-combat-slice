@@ -4,6 +4,10 @@
 
 namespace BladeGameplayTags
 {	
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Ability_Attack);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Attacking);
+	
+	
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Ability_Evade);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Evading);
 }
