@@ -3,6 +3,8 @@
 #include "BladeGameplayAbility_Evade.h"
 #include "Blade.h"
 #include "BladeGameplayTags.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 UBladeGameplayAbility_Evade::UBladeGameplayAbility_Evade()
 {

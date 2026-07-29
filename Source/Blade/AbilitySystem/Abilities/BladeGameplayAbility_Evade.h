@@ -28,5 +28,5 @@ protected:
 	float RootMotionScale = 1.25f;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Evade", meta = (ClampMin = "0.0"))
-	float Rate = 1.0f;
+	float Rate = 1.5f;
 };

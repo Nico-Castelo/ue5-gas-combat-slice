@@ -18,6 +18,7 @@ void UBladeGameplayAbility::PlayMontageAndEndOnCompletion(UAnimMontage* Montage,
 	);
 
 	MontageTask->OnCompleted.AddDynamic(this, &UBladeGameplayAbility::OnMontageCompleted);
+	MontageTask->OnBlendOut.AddDynamic(this, &UBladeGameplayAbility::OnMontageBlendOut);
 	MontageTask->OnInterrupted.AddDynamic(this, &UBladeGameplayAbility::OnMontageCancelled);
 	MontageTask->OnCancelled.AddDynamic(this, &UBladeGameplayAbility::OnMontageCancelled);
 
@@ -27,6 +28,10 @@ void UBladeGameplayAbility::PlayMontageAndEndOnCompletion(UAnimMontage* Montage,
 void UBladeGameplayAbility::OnMontageCompleted()
 {
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
+}
+
+void UBladeGameplayAbility::OnMontageBlendOut()
+{
 }
 
 void UBladeGameplayAbility::OnMontageCancelled()

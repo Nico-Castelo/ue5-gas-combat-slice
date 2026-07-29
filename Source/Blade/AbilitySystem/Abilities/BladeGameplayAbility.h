@@ -21,5 +21,8 @@ protected:
 	virtual void OnMontageCompleted();
 
 	UFUNCTION()
+	virtual void OnMontageBlendOut();
+
+	UFUNCTION()
 	virtual void OnMontageCancelled();
 };
