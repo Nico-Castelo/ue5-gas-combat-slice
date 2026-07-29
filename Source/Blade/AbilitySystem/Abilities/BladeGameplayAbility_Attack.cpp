@@ -56,7 +56,7 @@ void UBladeGameplayAbility_Attack::EndAbility(const FGameplayAbilitySpecHandle H
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
 
-void UBladeGameplayAbility_Attack::OnRecoveryStarted()
+void UBladeGameplayAbility_Attack::OnRecoveryStarted(FGameplayEventData Payload)
 {
 	GetAbilitySystemComponentFromActorInfo()->RemoveLooseGameplayTag(BladeGameplayTags::State_Attacking_Committed);
 }

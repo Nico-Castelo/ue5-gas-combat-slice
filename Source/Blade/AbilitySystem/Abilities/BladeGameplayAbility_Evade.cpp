@@ -14,7 +14,7 @@ UBladeGameplayAbility_Evade::UBladeGameplayAbility_Evade()
 
 	ActivationOwnedTags.AddTag(BladeGameplayTags::State_Evading);
 	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Evading);
-	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Attacking);
+	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Attacking_Committed);
 }
 
 void UBladeGameplayAbility_Evade::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
