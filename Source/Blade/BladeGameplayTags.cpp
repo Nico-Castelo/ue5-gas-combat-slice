@@ -13,4 +13,7 @@ namespace BladeGameplayTags
 	
 	UE_DEFINE_GAMEPLAY_TAG(Event_Montage_HitWindow_Begin, "Event.Montage.HitWindow.Begin");
 	UE_DEFINE_GAMEPLAY_TAG(Event_Montage_HitWindow_End, "Event.Montage.HitWindow.End");
+	
+	UE_DEFINE_GAMEPLAY_TAG(Event_Combat_Hit, "Event.Combat.Hit");
+	
 }

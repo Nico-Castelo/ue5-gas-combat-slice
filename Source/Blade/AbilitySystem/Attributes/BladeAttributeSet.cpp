@@ -3,10 +3,22 @@
 
 #include "BladeAttributeSet.h"
 
+#include "GameplayEffectExtension.h"
+
 UBladeAttributeSet::UBladeAttributeSet()
 {
 	InitMaxHealth(100.f);
 	InitHealth(100.f);
 	InitMaxPosture(100.f);
 	InitPosture(0.f);
+}
+
+void UBladeAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
+{
+	Super::PostGameplayEffectExecute(Data);
+	
+	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetMaxHealth()));
+	}
 }

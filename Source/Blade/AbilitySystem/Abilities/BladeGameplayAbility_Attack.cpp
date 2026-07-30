@@ -4,9 +4,11 @@
 #include "BladeGameplayAbility_Attack.h"
 
 #include "AbilitySystemComponent.h"
+#include "AbilitySystemGlobals.h"
 #include "Blade.h"
 #include "BladeGameplayTags.h"
 #include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
+#include "AbilitySystem/Attributes/BladeAttributeSet.h"
 #include "Core/BladeWeaponTraceComponent.h"
 
 UBladeGameplayAbility_Attack::UBladeGameplayAbility_Attack()
@@ -50,6 +52,11 @@ void UBladeGameplayAbility_Attack::ActivateAbility(const FGameplayAbilitySpecHan
 	WaitRecover->EventReceived.AddDynamic(this, &UBladeGameplayAbility_Attack::OnRecoveryStarted);
 	WaitRecover->ReadyForActivation();
 	
+	UAbilityTask_WaitGameplayEvent* WeaponHit = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(
+		this, BladeGameplayTags::Event_Combat_Hit, nullptr, false);
+	WeaponHit->EventReceived.AddDynamic(this, &UBladeGameplayAbility_Attack::OnWeaponHit);
+	WeaponHit->ReadyForActivation();
+	
 	PlayMontageAndEndOnCompletion(AttackMontage, Rate, RootMotionScale);
 	
 	UE_LOG(LogGame, Log, TEXT("Attack Ability Activated"));
@@ -92,6 +99,21 @@ void UBladeGameplayAbility_Attack::OnHitWindowEnd(FGameplayEventData Payload)
 	{
 		Trace->StopTrace();
 	}
+}
+
+void UBladeGameplayAbility_Attack::OnWeaponHit(FGameplayEventData Payload)
+{
+	if (!ensureMsgf(DamageEffect, TEXT("No Damage Effect specified for %s"), *GetNameSafe(this))) return;
+
+	UAbilitySystemComponent* TargetASC = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Payload.Target);
+	if (!TargetASC) return;
+
+	FGameplayEffectSpecHandle SpecHandle = MakeOutgoingGameplayEffectSpec(DamageEffect);
+	GetAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), TargetASC);
+	
+	UE_LOG(LogGame, Log, TEXT("Applied %s to %s - Health now %.0f"),
+	*GetNameSafe(DamageEffect), *GetNameSafe(Payload.Target),
+	TargetASC->GetNumericAttribute(UBladeAttributeSet::GetHealthAttribute()));
 }
 
 UBladeWeaponTraceComponent* UBladeGameplayAbility_Attack::GetWeaponTrace() const

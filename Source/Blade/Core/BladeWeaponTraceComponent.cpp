@@ -3,8 +3,12 @@
 
 #include "BladeWeaponTraceComponent.h"
 
+#include "AbilitySystemComponent.h"
+#include "AbilitySystemGlobals.h"
 #include "Blade.h"
 #include "BladeCharacterBase.h"
+#include "BladeGameplayTags.h"
+#include "Abilities/GameplayAbilityTypes.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Components/StaticMeshComponent.h"
 
@@ -35,6 +39,15 @@ void UBladeWeaponTraceComponent::TickComponent(float DeltaTime, ELevelTick TickT
 		if (!HitActor || HitActors.Contains(HitActor)) continue;
 		
 		HitActors.Add(HitActor);
+		
+		FGameplayEventData Payload;
+		Payload.Instigator = GetOwner();
+		Payload.Target = HitActor;
+		
+		if (UAbilitySystemComponent* ASC = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(GetOwner()))
+		{
+			ASC->HandleGameplayEvent(BladeGameplayTags::Event_Combat_Hit, &Payload);
+		}
 		
 		UE_LOG(LogGame, Log, TEXT("Weapon hit: %s"), *HitActor->GetName());
 	}

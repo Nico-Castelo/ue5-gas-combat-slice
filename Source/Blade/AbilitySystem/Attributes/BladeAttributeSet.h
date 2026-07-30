@@ -22,6 +22,8 @@ public:
 	
 	UBladeAttributeSet();
 	
+	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
+	
 	ATTRIBUTE_ACCESSORS(UBladeAttributeSet, Health)
 	ATTRIBUTE_ACCESSORS(UBladeAttributeSet, MaxHealth)
 	ATTRIBUTE_ACCESSORS(UBladeAttributeSet, Posture)

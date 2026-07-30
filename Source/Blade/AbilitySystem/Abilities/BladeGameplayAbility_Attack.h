@@ -31,15 +31,21 @@ protected:
 	
 	UFUNCTION()
 	void OnHitWindowEnd(FGameplayEventData Payload);
-
-	UBladeWeaponTraceComponent* GetWeaponTrace() const;
+	
+	UFUNCTION()
+	void OnWeaponHit(FGameplayEventData Payload);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Attack")
 	TObjectPtr<UAnimMontage> AttackMontage;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Attack")
+	TSubclassOf<UGameplayEffect> DamageEffect;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Attack", meta = (ClampMin = "0.0"))
 	float RootMotionScale = 1.0f;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Attack", meta = (ClampMin = "0.0"))
 	float Rate = 1.6f;
+	
+	UBladeWeaponTraceComponent* GetWeaponTrace() const;
 };
