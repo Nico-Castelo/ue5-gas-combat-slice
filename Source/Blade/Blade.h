@@ -3,5 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/EngineTypes.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogGame, Log, All)
+
+constexpr ECollisionChannel ECC_Weapon = ECC_GameTraceChannel1;

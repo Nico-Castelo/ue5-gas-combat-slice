@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "BladeCharacterBase.generated.h"
 
+class UBladeWeaponTraceComponent;
 class UGameplayAbility;
 class UBladeAttributeSet;
 class UAbilitySystemComponent;
@@ -35,6 +36,13 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Ability System")
 	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
 	
-	UPROPERTY(VisibleAnywhere, Category = "Combat");
+	UPROPERTY(VisibleAnywhere, Category = "Combat")
 	TObjectPtr<UStaticMeshComponent> WeaponMesh;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Combat")
+	TObjectPtr<UBladeWeaponTraceComponent> TraceComponent;
+	
+public:
+	
+	UStaticMeshComponent* GetWeaponMesh() { return WeaponMesh; }
 };
