@@ -41,6 +41,9 @@ void ABladePlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	EnhancedInput->BindAction(Input_Attack, ETriggerEvent::Started, this, &ABladePlayerCharacter::Attack);
 	
 	EnhancedInput->BindAction(Input_Evade, ETriggerEvent::Triggered, this, &ABladePlayerCharacter::Evade);
+	
+	EnhancedInput->BindAction(Input_Sprint, ETriggerEvent::Triggered, this, &ABladePlayerCharacter::Sprint);
+	EnhancedInput->BindAction(Input_Sprint, ETriggerEvent::Completed, this, &ABladePlayerCharacter::StopSprinting);
 }
 
 void ABladePlayerCharacter::Move(const FInputActionValue& InValue)
@@ -77,4 +80,21 @@ void ABladePlayerCharacter::Attack()
 void ABladePlayerCharacter::Evade()
 {
 	ASC->TryActivateAbilitiesByTag(FGameplayTagContainer(BladeGameplayTags::Ability_Evade));
+}
+
+void ABladePlayerCharacter::Sprint()
+{
+	if (bIsSprinting) return;
+
+	CachedWalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+	bIsSprinting = true;
+}
+
+void ABladePlayerCharacter::StopSprinting()
+{
+	if (!bIsSprinting) return;
+
+	GetCharacterMovement()->MaxWalkSpeed = CachedWalkSpeed;
+	bIsSprinting = false;
 }
