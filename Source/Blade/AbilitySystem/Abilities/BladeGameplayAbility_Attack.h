@@ -6,6 +6,8 @@
 #include "BladeGameplayAbility.h"
 #include "BladeGameplayAbility_Attack.generated.h"
 
+class UBladeWeaponTraceComponent;
+
 UCLASS()
 class BLADE_API UBladeGameplayAbility_Attack : public UBladeGameplayAbility
 {
@@ -24,6 +26,14 @@ protected:
 	UFUNCTION()
 	void OnRecoveryStarted(FGameplayEventData Payload);
 	
+	UFUNCTION()
+	void OnHitWindowBegin(FGameplayEventData Payload);
+	
+	UFUNCTION()
+	void OnHitWindowEnd(FGameplayEventData Payload);
+
+	UBladeWeaponTraceComponent* GetWeaponTrace() const;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Attack")
 	TObjectPtr<UAnimMontage> AttackMontage;
 	

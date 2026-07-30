@@ -7,6 +7,7 @@
 #include "Blade.h"
 #include "BladeGameplayTags.h"
 #include "Abilities/Tasks/AbilityTask_WaitGameplayEvent.h"
+#include "Core/BladeWeaponTraceComponent.h"
 
 UBladeGameplayAbility_Attack::UBladeGameplayAbility_Attack()
 {
@@ -15,6 +16,7 @@ UBladeGameplayAbility_Attack::UBladeGameplayAbility_Attack()
 	SetAssetTags(Tags);
 	
 	ActivationOwnedTags.AddTag(BladeGameplayTags::State_Attacking);
+	
 	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Attacking);
 	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Evading);
 }
@@ -32,7 +34,17 @@ void UBladeGameplayAbility_Attack::ActivateAbility(const FGameplayAbilitySpecHan
 	}
 	
 	GetAbilitySystemComponentFromActorInfo()->AddLooseGameplayTag(BladeGameplayTags::State_Attacking_Committed);
-
+	
+	UAbilityTask_WaitGameplayEvent* HitWindowBegin = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(
+		this, BladeGameplayTags::Event_Montage_HitWindow_Begin, nullptr, true);
+	HitWindowBegin->EventReceived.AddDynamic(this, &UBladeGameplayAbility_Attack::OnHitWindowBegin);
+	HitWindowBegin->ReadyForActivation();
+	
+	UAbilityTask_WaitGameplayEvent* HitWindowEnd = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(
+		this, BladeGameplayTags::Event_Montage_HitWindow_End, nullptr, true);
+	HitWindowEnd->EventReceived.AddDynamic(this, &UBladeGameplayAbility_Attack::OnHitWindowEnd);
+	HitWindowEnd->ReadyForActivation();
+	
 	UAbilityTask_WaitGameplayEvent* WaitRecover = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(
 		this, BladeGameplayTags::Event_Montage_Recover, nullptr, true);
 	WaitRecover->EventReceived.AddDynamic(this, &UBladeGameplayAbility_Attack::OnRecoveryStarted);
@@ -47,16 +59,43 @@ void UBladeGameplayAbility_Attack::EndAbility(const FGameplayAbilitySpecHandle H
 	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
 	bool bReplicateEndAbility, bool bWasCancelled)
 {
+	if (UBladeWeaponTraceComponent* Trace = GetWeaponTrace())
+	{
+		Trace->StopTrace();
+	}
+
 	UAbilitySystemComponent* ASC = GetAbilitySystemComponentFromActorInfo();
 	if (ASC && ASC->HasMatchingGameplayTag(BladeGameplayTags::State_Attacking_Committed))
 	{
 		ASC->RemoveLooseGameplayTag(BladeGameplayTags::State_Attacking_Committed);
-	}	
-
+	}
+	
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
 
 void UBladeGameplayAbility_Attack::OnRecoveryStarted(FGameplayEventData Payload)
 {
 	GetAbilitySystemComponentFromActorInfo()->RemoveLooseGameplayTag(BladeGameplayTags::State_Attacking_Committed);
+}
+
+void UBladeGameplayAbility_Attack::OnHitWindowBegin(FGameplayEventData Payload)
+{
+	if (UBladeWeaponTraceComponent* Trace = GetWeaponTrace())
+	{
+		Trace->StartTrace();
+	}
+}
+
+void UBladeGameplayAbility_Attack::OnHitWindowEnd(FGameplayEventData Payload)
+{
+	if (UBladeWeaponTraceComponent* Trace = GetWeaponTrace())
+	{
+		Trace->StopTrace();
+	}
+}
+
+UBladeWeaponTraceComponent* UBladeGameplayAbility_Attack::GetWeaponTrace() const
+{
+	AActor* Avatar = GetAvatarActorFromActorInfo();
+	return Avatar ? Avatar->FindComponentByClass<UBladeWeaponTraceComponent>() : nullptr;
 }
