@@ -9,9 +9,15 @@
 #include "BladeCharacterBase.h"
 #include "BladeGameplayTags.h"
 #include "Abilities/GameplayAbilityTypes.h"
+#include "HAL/IConsoleManager.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Components/StaticMeshComponent.h"
 
+static TAutoConsoleVariable<bool> CVarWeaponTraceDebugDraw(
+	TEXT("blade.combat.WeaponTraceDebugDraw"),
+	false,
+	TEXT("Draw weapon sphere traces during attack hit windows."),
+	ECVF_Cheat);
 
 UBladeWeaponTraceComponent::UBladeWeaponTraceComponent()
 {
@@ -19,6 +25,18 @@ UBladeWeaponTraceComponent::UBladeWeaponTraceComponent()
 	PrimaryComponentTick.bStartWithTickEnabled = false;
 	
 }
+
+void UBladeWeaponTraceComponent::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	ABladeCharacterBase* Character = Cast<ABladeCharacterBase>(GetOwner());
+
+	if (!ensureMsgf(Character, TEXT("%s: el owner no es ABladeCharacterBase"), *GetName())) return;
+
+	WeaponMesh = Character->GetWeaponMesh();
+}
+
 void UBladeWeaponTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType,
                                                FActorComponentTickFunction* ThisTickFunction)
 {
@@ -28,9 +46,11 @@ void UBladeWeaponTraceComponent::TickComponent(float DeltaTime, ELevelTick TickT
 	const FVector End = WeaponMesh->GetSocketLocation(TraceEndSocketName);
 
 	TArray<FHitResult> Hits;
+	const bool bDebugDraw = CVarWeaponTraceDebugDraw.GetValueOnGameThread();
+	const EDrawDebugTrace::Type DebugDrawType = bDebugDraw ? EDrawDebugTrace::ForDuration : EDrawDebugTrace::None;
 	UKismetSystemLibrary::SphereTraceMulti(this, Start, End, TraceRadius,
-	UEngineTypes::ConvertToTraceType(ECC_Weapon), false, { GetOwner() },
-	EDrawDebugTrace::ForDuration, Hits, true, FLinearColor::Red, FLinearColor::Green, 2.0f);
+		UEngineTypes::ConvertToTraceType(ECC_Weapon), false, { GetOwner() },
+		DebugDrawType, Hits, true, FLinearColor::Red, FLinearColor::Green, 2.0f);
 	
 	for (const FHitResult& Hit: Hits)
 	{
@@ -51,17 +71,6 @@ void UBladeWeaponTraceComponent::TickComponent(float DeltaTime, ELevelTick TickT
 		
 		UE_LOG(LogGame, Log, TEXT("Weapon hit: %s"), *HitActor->GetName());
 	}
-}
-
-void UBladeWeaponTraceComponent::BeginPlay()
-{
-	Super::BeginPlay();
-	
-	ABladeCharacterBase* Character = Cast<ABladeCharacterBase>(GetOwner());
-
-	if (!ensureMsgf(Character, TEXT("%s: el owner no es ABladeCharacterBase"), *GetName())) return;
-
-	WeaponMesh = Character->GetWeaponMesh();
 }
 
 void UBladeWeaponTraceComponent::StartTrace()
