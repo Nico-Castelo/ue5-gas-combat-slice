@@ -62,7 +62,7 @@ protected:
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Speed")
-	float SprintSpeed = 750.0f;
+	float SprintSpeed = 800.0f;
 
 	float CachedWalkSpeed = 0.0f;
 

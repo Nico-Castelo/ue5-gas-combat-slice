@@ -5,14 +5,14 @@
 
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 
-void UBladeGameplayAbility::PlayMontageAndEndOnCompletion(UAnimMontage* Montage, float Rate, float RootMotionScale)
+void UBladeGameplayAbility::PlayMontageAndEndOnCompletion(UAnimMontage* Montage, float Rate, float RootMotionScale, FName StartSection)
 {
 	UAbilityTask_PlayMontageAndWait* MontageTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
 		this,
 		NAME_None,
 		Montage,
 		Rate,
-		NAME_None,
+		StartSection,
 		true,
 		RootMotionScale
 	);

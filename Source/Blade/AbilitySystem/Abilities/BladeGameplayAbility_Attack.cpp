@@ -53,7 +53,7 @@ void UBladeGameplayAbility_Attack::ActivateAbility(const FGameplayAbilitySpecHan
 	WaitRecover->ReadyForActivation();
 	
 	UAbilityTask_WaitGameplayEvent* WeaponHit = UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(
-		this, BladeGameplayTags::Event_Combat_Hit, nullptr, false);
+		this, BladeGameplayTags::Event_Combat_HitDealt, nullptr, false);
 	WeaponHit->EventReceived.AddDynamic(this, &UBladeGameplayAbility_Attack::OnWeaponHit);
 	WeaponHit->ReadyForActivation();
 	
@@ -110,6 +110,12 @@ void UBladeGameplayAbility_Attack::OnWeaponHit(FGameplayEventData Payload)
 
 	FGameplayEffectSpecHandle SpecHandle = MakeOutgoingGameplayEffectSpec(DamageEffect);
 	GetAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), TargetASC);
+	
+	FGameplayEventData HitReceivedPayload;
+	HitReceivedPayload.Instigator = GetAvatarActorFromActorInfo();
+	HitReceivedPayload.Target = Payload.Target;
+	TargetASC->HandleGameplayEvent(BladeGameplayTags::Event_Combat_HitReceived, &HitReceivedPayload);
+
 	
 	UE_LOG(LogGame, Log, TEXT("Applied %s to %s - Health now %.0f"),
 	*GetNameSafe(DamageEffect), *GetNameSafe(Payload.Target),

@@ -23,7 +23,6 @@ UBladeWeaponTraceComponent::UBladeWeaponTraceComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 	PrimaryComponentTick.bStartWithTickEnabled = false;
-	
 }
 
 void UBladeWeaponTraceComponent::BeginPlay()
@@ -66,7 +65,7 @@ void UBladeWeaponTraceComponent::TickComponent(float DeltaTime, ELevelTick TickT
 		
 		if (UAbilitySystemComponent* ASC = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(GetOwner()))
 		{
-			ASC->HandleGameplayEvent(BladeGameplayTags::Event_Combat_Hit, &Payload);
+			ASC->HandleGameplayEvent(BladeGameplayTags::Event_Combat_HitDealt, &Payload);
 		}
 		
 		UE_LOG(LogGame, Log, TEXT("Weapon hit: %s"), *HitActor->GetName());
