@@ -37,10 +37,9 @@ protected:
 	
 	void Evade();
 	
+	void SprintStart();
 	
-	void Sprint();
-	
-	void StopSprinting();
+	void SprintEnd();
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UInputAction> Input_Move;
@@ -68,11 +67,4 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
-	
-	UPROPERTY(EditDefaultsOnly, Category = "Speed")
-	float SprintSpeed = 800.0f;
-
-	float CachedWalkSpeed = 0.0f;
-
-	bool bIsSprinting = false;
 };

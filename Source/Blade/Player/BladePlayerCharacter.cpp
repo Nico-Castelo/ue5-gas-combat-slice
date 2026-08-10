@@ -40,13 +40,13 @@ void ABladePlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	
 	EnhancedInput->BindAction(Input_Attack, ETriggerEvent::Started, this, &ABladePlayerCharacter::Attack);
 	
-	EnhancedInput->BindAction(Input_Block, ETriggerEvent::Started, this, &ABladePlayerCharacter::BlockStart);
+	EnhancedInput->BindAction(Input_Block, ETriggerEvent::Triggered, this, &ABladePlayerCharacter::BlockStart);
 	EnhancedInput->BindAction(Input_Block, ETriggerEvent::Completed, this, &ABladePlayerCharacter::BlockEnd);
 	
 	EnhancedInput->BindAction(Input_Evade, ETriggerEvent::Triggered, this, &ABladePlayerCharacter::Evade);
 	
-	EnhancedInput->BindAction(Input_Sprint, ETriggerEvent::Triggered, this, &ABladePlayerCharacter::Sprint);
-	EnhancedInput->BindAction(Input_Sprint, ETriggerEvent::Completed, this, &ABladePlayerCharacter::StopSprinting);
+	EnhancedInput->BindAction(Input_Sprint, ETriggerEvent::Triggered, this, &ABladePlayerCharacter::SprintStart);
+	EnhancedInput->BindAction(Input_Sprint, ETriggerEvent::Completed, this, &ABladePlayerCharacter::SprintEnd);
 }
 
 void ABladePlayerCharacter::Move(const FInputActionValue& InValue)
@@ -82,7 +82,6 @@ void ABladePlayerCharacter::Attack()
 
 void ABladePlayerCharacter::BlockStart()
 {
-	StopSprinting();
 	ASC->TryActivateAbilitiesByTag(FGameplayTagContainer(BladeGameplayTags::Ability_Block));
 }
 
@@ -97,22 +96,13 @@ void ABladePlayerCharacter::Evade()
 	ASC->TryActivateAbilitiesByTag(FGameplayTagContainer(BladeGameplayTags::Ability_Evade));
 }
 
-void ABladePlayerCharacter::Sprint()
+void ABladePlayerCharacter::SprintStart()
 {
-	// TODO: MaxWalkSpeed has two writers (sprint, block) coordinated by hand.
-	// Replace with a MoveSpeed attribute driven by gameplay effects.
-	if (ASC->HasMatchingGameplayTag(BladeGameplayTags::State_Blocking)) return;
-	if (bIsSprinting) return;
-
-	CachedWalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
-	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
-	bIsSprinting = true;
+	ASC->TryActivateAbilitiesByTag(FGameplayTagContainer(BladeGameplayTags::Ability_Sprint));
 }
 
-void ABladePlayerCharacter::StopSprinting()
+void ABladePlayerCharacter::SprintEnd()
 {
-	if (!bIsSprinting) return;
-
-	GetCharacterMovement()->MaxWalkSpeed = CachedWalkSpeed;
-	bIsSprinting = false;
+	FGameplayTagContainer SprintTags(BladeGameplayTags::Ability_Sprint);
+	ASC->CancelAbilities(&SprintTags);
 }

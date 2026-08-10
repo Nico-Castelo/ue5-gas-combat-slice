@@ -8,6 +8,7 @@
 #include "AbilitySystem/Attributes/BladeAttributeSet.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 ABladeCharacterBase::ABladeCharacterBase()
@@ -29,8 +30,18 @@ void ABladeCharacterBase::PossessedBy(AController* NewController)
 	
 	ASC->InitAbilityActorInfo(this, this);
 	
+	ASC->GetGameplayAttributeValueChangeDelegate(UBladeAttributeSet::GetMoveSpeedAttribute())
+	.AddUObject(this, &ABladeCharacterBase::OnMoveSpeedChanged);
+	
+	GetCharacterMovement()->MaxWalkSpeed = AttributeSet->GetMoveSpeed();
+	
 	for (const TSubclassOf<UGameplayAbility>& AbilityClass : DefaultAbilities)
 	{
 		ASC->GiveAbility(FGameplayAbilitySpec(AbilityClass));
 	}
+}
+
+void ABladeCharacterBase::OnMoveSpeedChanged(const FOnAttributeChangeData& Data)
+{
+	GetCharacterMovement()->MaxWalkSpeed = Data.NewValue;
 }

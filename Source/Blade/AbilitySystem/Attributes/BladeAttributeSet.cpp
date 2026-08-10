@@ -11,6 +11,7 @@ UBladeAttributeSet::UBladeAttributeSet()
 	InitHealth(100.f);
 	InitMaxPosture(100.f);
 	InitPosture(0.f);
+	InitMoveSpeed(600);
 }
 
 void UBladeAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)

@@ -2,9 +2,9 @@
 
 
 #include "BladeGameplayAbility_Block.h"
+
+#include "AbilitySystemComponent.h"
 #include "BladeGameplayTags.h"
-#include "GameFramework/Character.h"
-#include "GameFramework/CharacterMovementComponent.h"
 
 UBladeGameplayAbility_Block::UBladeGameplayAbility_Block()
 {
@@ -13,6 +13,10 @@ UBladeGameplayAbility_Block::UBladeGameplayAbility_Block()
 	SetAssetTags(Tags);
 	
 	ActivationOwnedTags.AddTag(BladeGameplayTags::State_Blocking);
+	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Attacking_Committed);
+	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Evading);
+	ActivationBlockedTags.AddTag(BladeGameplayTags::State_HitReacting);
+	CancelAbilitiesWithTag.AddTag(BladeGameplayTags::Ability_Sprint);
 }
 
 void UBladeGameplayAbility_Block::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -26,12 +30,11 @@ void UBladeGameplayAbility_Block::ActivateAbility(const FGameplayAbilitySpecHand
 		EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
 		return;
 	}
-
-	if (const ACharacter* Avatar = Cast<ACharacter>(GetAvatarActorFromActorInfo()))
+	
+	if (ensureMsgf(SlowEffect, TEXT("SlowEffect not set on %s"), *GetName()))
 	{
-		UCharacterMovementComponent* MoveComp = Avatar->GetCharacterMovement();
-		CachedWalkSpeed = MoveComp->MaxWalkSpeed;
-		MoveComp->MaxWalkSpeed = BlockWalkSpeed;
+		const FGameplayEffectSpecHandle Spec = MakeOutgoingGameplayEffectSpec(SlowEffect);
+		SlowEffectHandle = ApplyGameplayEffectSpecToOwner(Handle, ActorInfo, ActivationInfo, Spec);
 	}
 }
 
@@ -39,14 +42,15 @@ void UBladeGameplayAbility_Block::EndAbility(const FGameplayAbilitySpecHandle Ha
 	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
 	bool bReplicateEndAbility, bool bWasCancelled)
 {
-	// CachedWalkSpeed == 0 means the cap was never applied
-	if (CachedWalkSpeed > 0.0f)
+	if (SlowEffectHandle.IsValid())
 	{
-		if (const ACharacter* Avatar = Cast<ACharacter>(GetAvatarActorFromActorInfo()))
+		if (UAbilitySystemComponent* OwnerASC = GetAbilitySystemComponentFromActorInfo())
 		{
-			Avatar->GetCharacterMovement()->MaxWalkSpeed = CachedWalkSpeed;
+			OwnerASC->RemoveActiveGameplayEffect(SlowEffectHandle);
 		}
+		
+		SlowEffectHandle = FActiveGameplayEffectHandle();
 	}
-
+	
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }

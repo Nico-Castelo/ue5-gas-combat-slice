@@ -28,6 +28,7 @@ public:
 	ATTRIBUTE_ACCESSORS(UBladeAttributeSet, MaxHealth)
 	ATTRIBUTE_ACCESSORS(UBladeAttributeSet, Posture)
 	ATTRIBUTE_ACCESSORS(UBladeAttributeSet, MaxPosture)
+	ATTRIBUTE_ACCESSORS(UBladeAttributeSet, MoveSpeed)
 	
 protected:
 	
@@ -42,4 +43,7 @@ protected:
 	
 	UPROPERTY(BlueprintReadOnly, Category = "Attributes")
 	FGameplayAttributeData MaxPosture;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Attributes")
+	FGameplayAttributeData MoveSpeed;
 };

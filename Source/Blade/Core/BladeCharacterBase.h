@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "BladeCharacterBase.generated.h"
 
+struct FOnAttributeChangeData;
 class UBladeWeaponTraceComponent;
 class UGameplayAbility;
 class UBladeAttributeSet;
@@ -26,6 +27,8 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 	
 protected:
+	
+	void OnMoveSpeedChanged(const FOnAttributeChangeData& Data);
 	
 	UPROPERTY(VisibleAnywhere, Category = "Ability System")
 	TObjectPtr<UAbilitySystemComponent> ASC;
