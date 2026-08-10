@@ -6,6 +6,7 @@
 #include "Animation/AnimInstance.h"
 #include "BladeAnimInstance.generated.h"
 
+class UAbilitySystemComponent;
 class ACharacter;
 class UCharacterMovementComponent;
 /**
@@ -19,9 +20,11 @@ class BLADE_API UBladeAnimInstance : public UAnimInstance
 public:
 	
 	virtual void NativeInitializeAnimation() override;
+		
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 	
 	virtual void NativeThreadSafeUpdateAnimation(float DeltaSeconds) override;
-	
+
 protected:
 	
 	UPROPERTY(BlueprintReadOnly, Category = "Animation")
@@ -33,9 +36,15 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Animation")
 	float VerticalVelocity = 0.0f;
 	
+	UPROPERTY(BlueprintReadOnly, Category = "Animation")
+	bool bIsBlocking = false;
+	
 	UPROPERTY(Transient)
 	TObjectPtr<ACharacter> OwnerCharacter;
 	
 	UPROPERTY(Transient)
 	TObjectPtr<UCharacterMovementComponent> OwnerMovementComponent;
+	
+	UPROPERTY(Transient)
+	TObjectPtr<UAbilitySystemComponent> OwnerASC;
 };

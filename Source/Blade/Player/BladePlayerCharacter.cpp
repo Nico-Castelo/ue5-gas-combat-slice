@@ -40,6 +40,9 @@ void ABladePlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	
 	EnhancedInput->BindAction(Input_Attack, ETriggerEvent::Started, this, &ABladePlayerCharacter::Attack);
 	
+	EnhancedInput->BindAction(Input_Block, ETriggerEvent::Started, this, &ABladePlayerCharacter::BlockStart);
+	EnhancedInput->BindAction(Input_Block, ETriggerEvent::Completed, this, &ABladePlayerCharacter::BlockEnd);
+	
 	EnhancedInput->BindAction(Input_Evade, ETriggerEvent::Triggered, this, &ABladePlayerCharacter::Evade);
 	
 	EnhancedInput->BindAction(Input_Sprint, ETriggerEvent::Triggered, this, &ABladePlayerCharacter::Sprint);
@@ -77,6 +80,18 @@ void ABladePlayerCharacter::Attack()
 	ASC->TryActivateAbilitiesByTag(FGameplayTagContainer(BladeGameplayTags::Ability_Attack));
 }
 
+void ABladePlayerCharacter::BlockStart()
+{
+	StopSprinting();
+	ASC->TryActivateAbilitiesByTag(FGameplayTagContainer(BladeGameplayTags::Ability_Block));
+}
+
+void ABladePlayerCharacter::BlockEnd()
+{
+	FGameplayTagContainer BlockTags(BladeGameplayTags::Ability_Block);
+	ASC->CancelAbilities(&BlockTags);
+}
+
 void ABladePlayerCharacter::Evade()
 {
 	ASC->TryActivateAbilitiesByTag(FGameplayTagContainer(BladeGameplayTags::Ability_Evade));
@@ -84,6 +99,9 @@ void ABladePlayerCharacter::Evade()
 
 void ABladePlayerCharacter::Sprint()
 {
+	// TODO: MaxWalkSpeed has two writers (sprint, block) coordinated by hand.
+	// Replace with a MoveSpeed attribute driven by gameplay effects.
+	if (ASC->HasMatchingGameplayTag(BladeGameplayTags::State_Blocking)) return;
 	if (bIsSprinting) return;
 
 	CachedWalkSpeed = GetCharacterMovement()->MaxWalkSpeed;

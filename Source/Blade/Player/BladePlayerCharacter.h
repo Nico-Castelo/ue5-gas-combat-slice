@@ -31,7 +31,12 @@ protected:
 	
 	void Attack();
 	
+	void BlockStart();
+	
+	void BlockEnd();
+	
 	void Evade();
+	
 	
 	void Sprint();
 	
@@ -54,6 +59,9 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UInputAction> Input_Sprint;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputAction> Input_Block;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UCameraComponent> CameraComponent;

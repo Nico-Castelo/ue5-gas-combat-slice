@@ -5,12 +5,14 @@ namespace BladeGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Ability_Attack, "Ability.Attack");
 	UE_DEFINE_GAMEPLAY_TAG(Ability_Evade, "Ability.Evade");
 	UE_DEFINE_GAMEPLAY_TAG(Ability_HitReact, "Ability.HitReact");
+	UE_DEFINE_GAMEPLAY_TAG(Ability_Block, "Ability.Block");
 	
 	
 	UE_DEFINE_GAMEPLAY_TAG(State_Attacking, "State.Attacking");
 	UE_DEFINE_GAMEPLAY_TAG(State_Evading, "State.Evading");
 	UE_DEFINE_GAMEPLAY_TAG(State_Attacking_Committed, "State.Attacking.Committed");
 	UE_DEFINE_GAMEPLAY_TAG(State_HitReacting, "State.HitReacting");
+	UE_DEFINE_GAMEPLAY_TAG(State_Blocking, "State.Blocking");
 	
 	
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Event_Montage_Recover, "Event.Montage.Recover", "Sent from the attack montage when recovery starts. The attack ability clears the committed state, opening the cancel window");
