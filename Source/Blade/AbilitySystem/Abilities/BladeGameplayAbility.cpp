@@ -5,6 +5,11 @@
 
 #include "Abilities/Tasks/AbilityTask_PlayMontageAndWait.h"
 
+UBladeGameplayAbility::UBladeGameplayAbility()
+{
+	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
+}
+
 void UBladeGameplayAbility::PlayMontageAndEndOnCompletion(UAnimMontage* Montage, float Rate, float RootMotionScale, FName StartSection)
 {
 	UAbilityTask_PlayMontageAndWait* MontageTask = UAbilityTask_PlayMontageAndWait::CreatePlayMontageAndWaitProxy(
@@ -32,6 +37,7 @@ void UBladeGameplayAbility::OnMontageCompleted()
 
 void UBladeGameplayAbility::OnMontageBlendOut()
 {
+	
 }
 
 void UBladeGameplayAbility::OnMontageCancelled()

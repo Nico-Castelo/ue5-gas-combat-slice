@@ -13,6 +13,10 @@ class BLADE_API UBladeGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
 	
+public:
+	
+	UBladeGameplayAbility();
+	
 protected:
 	
 	void PlayMontageAndEndOnCompletion(UAnimMontage* Montage, float Rate = 1.0f, float RootMotionScale = 1.0f, FName StartSection = NAME_None);
