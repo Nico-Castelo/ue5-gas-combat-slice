@@ -3,8 +3,6 @@
 #include "BladeGameplayAbility_Evade.h"
 #include "Blade.h"
 #include "BladeGameplayTags.h"
-#include "GameFramework/Character.h"
-#include "GameFramework/CharacterMovementComponent.h"
 
 UBladeGameplayAbility_Evade::UBladeGameplayAbility_Evade()
 {
@@ -15,6 +13,7 @@ UBladeGameplayAbility_Evade::UBladeGameplayAbility_Evade()
 	ActivationOwnedTags.AddTag(BladeGameplayTags::State_Evading);
 	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Evading);
 	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Attacking_Committed);
+	ActivationBlockedTags.AddTag(BladeGameplayTags::State_HitReacting);
 	
 	CancelAbilitiesWithTag.AddTag(BladeGameplayTags::Ability_Block);
 }
@@ -33,5 +32,5 @@ void UBladeGameplayAbility_Evade::ActivateAbility(const FGameplayAbilitySpecHand
 
 	PlayMontageAndEndOnCompletion(EvadeMontage, Rate, RootMotionScale);
 
-	UE_LOG(LogGame, Log, TEXT("Evade Ability Activated"));
+	UE_LOG(LogGame, Verbose, TEXT("Evade Ability Activated"));
 }

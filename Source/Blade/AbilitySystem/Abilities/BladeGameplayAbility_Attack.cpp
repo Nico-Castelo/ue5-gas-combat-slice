@@ -21,6 +21,7 @@ UBladeGameplayAbility_Attack::UBladeGameplayAbility_Attack()
 	
 	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Attacking);
 	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Evading);
+	ActivationBlockedTags.AddTag(BladeGameplayTags::State_HitReacting);
 	
 	CancelAbilitiesWithTag.AddTag(BladeGameplayTags::Ability_Block);
 }
@@ -61,7 +62,7 @@ void UBladeGameplayAbility_Attack::ActivateAbility(const FGameplayAbilitySpecHan
 	
 	PlayMontageAndEndOnCompletion(AttackMontage, Rate, RootMotionScale);
 	
-	UE_LOG(LogGame, Log, TEXT("Attack Ability Activated"));
+	UE_LOG(LogGame, Verbose, TEXT("Attack Ability Activated"));
 }
 
 void UBladeGameplayAbility_Attack::EndAbility(const FGameplayAbilitySpecHandle Handle,
@@ -119,7 +120,7 @@ void UBladeGameplayAbility_Attack::OnWeaponHit(FGameplayEventData Payload)
 	TargetASC->HandleGameplayEvent(BladeGameplayTags::Event_Combat_HitReceived, &HitReceivedPayload);
 
 	
-	UE_LOG(LogGame, Log, TEXT("Applied %s to %s - Health now %.0f"),
+	UE_LOG(LogGame, Verbose, TEXT("Applied %s to %s - Health now %.0f"),
 	*GetNameSafe(DamageEffect), *GetNameSafe(Payload.Target),
 	TargetASC->GetNumericAttribute(UBladeAttributeSet::GetHealthAttribute()));
 }

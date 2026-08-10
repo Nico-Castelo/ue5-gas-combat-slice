@@ -21,7 +21,7 @@ void UBladeAnimNotifyState_SendGameplayEvent::NotifyBegin(USkeletalMeshComponent
 	{
 		FGameplayEventData Payload;
 		ASC->HandleGameplayEvent(BeginEventTag, &Payload);
-		UE_LOG(LogGame, Log, TEXT("Send Gameplay Event: %s"), *BeginEventTag.ToString());
+		UE_LOG(LogGame, Verbose, TEXT("Send Gameplay Event: %s"), *BeginEventTag.ToString());
 	}
 }
 
@@ -38,6 +38,6 @@ void UBladeAnimNotifyState_SendGameplayEvent::NotifyEnd(USkeletalMeshComponent* 
 	{
 		FGameplayEventData Payload;
 		ASC->HandleGameplayEvent(EndEventTag, &Payload);
-		UE_LOG(LogGame, Log, TEXT("Send Gameplay Event: %s"), *EndEventTag.ToString());
+		UE_LOG(LogGame, Verbose, TEXT("Send Gameplay Event: %s"), *EndEventTag.ToString());
 	}
 }

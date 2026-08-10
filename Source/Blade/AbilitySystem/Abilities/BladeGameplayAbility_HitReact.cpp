@@ -55,7 +55,7 @@ void UBladeGameplayAbility_HitReact::ActivateAbility(const FGameplayAbilitySpecH
 
 	PlayMontageAndEndOnCompletion(HitReactMontage, Rate, RootMotionScale, Section);
 
-	UE_LOG(LogGame, Log, TEXT("HitReact: %s from %s"), *Section.ToString(), *GetNameSafe(TriggerEventData->Instigator));
+	UE_LOG(LogGame, Verbose, TEXT("HitReact: %s from %s"), *Section.ToString(), *GetNameSafe(TriggerEventData->Instigator));
 }
 
 EHitDirection UBladeGameplayAbility_HitReact::CalculateHitDirection(const AActor* Attacker) const
