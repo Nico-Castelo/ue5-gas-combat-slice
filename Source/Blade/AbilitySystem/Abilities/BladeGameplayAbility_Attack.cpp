@@ -107,12 +107,16 @@ void UBladeGameplayAbility_Attack::OnHitWindowEnd(FGameplayEventData Payload)
 void UBladeGameplayAbility_Attack::OnWeaponHit(FGameplayEventData Payload)
 {
 	if (!ensureMsgf(DamageEffect, TEXT("No Damage Effect specified for %s"), *GetNameSafe(this))) return;
+	if (!ensureMsgf(PostureDamageEffect, TEXT("No Posture Damage Effect specified for %s"), *GetNameSafe(this))) return;
 
 	UAbilitySystemComponent* TargetASC = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Payload.Target);
 	if (!TargetASC) return;
 
-	FGameplayEffectSpecHandle SpecHandle = MakeOutgoingGameplayEffectSpec(DamageEffect);
-	GetAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), TargetASC);
+	FGameplayEffectSpecHandle DamageSpecHandle = MakeOutgoingGameplayEffectSpec(DamageEffect);
+	GetAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(*DamageSpecHandle.Data.Get(), TargetASC);
+	
+	FGameplayEffectSpecHandle PostureSpecHandle = MakeOutgoingGameplayEffectSpec(PostureDamageEffect);
+	GetAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(*PostureSpecHandle.Data.Get(), TargetASC);
 	
 	FGameplayEventData HitReceivedPayload;
 	HitReceivedPayload.Instigator = GetAvatarActorFromActorInfo();

@@ -3,6 +3,7 @@
 
 #include "BladeGameplayAbility_HitReact.h"
 
+#include "AbilitySystemComponent.h"
 #include "Blade.h"
 #include "BladeGameplayTags.h"
 #include "Animation/AnimMontage.h"
@@ -34,6 +35,18 @@ void UBladeGameplayAbility_HitReact::ActivateAbility(const FGameplayAbilitySpecH
 	if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
 	{
 		EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
+		return;
+	}
+	
+	if (GetAbilitySystemComponentFromActorInfo()->HasMatchingGameplayTag(BladeGameplayTags::State_Blocking))
+	{
+		if (!ensureMsgf(BlockHitMontage, TEXT("No BlockHitMontage assigned for %s"), *GetNameSafe(this)))
+		{
+			EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
+			return;
+		}
+		
+		PlayMontageAndEndOnCompletion(BlockHitMontage, Rate, RootMotionScale);
 		return;
 	}
 

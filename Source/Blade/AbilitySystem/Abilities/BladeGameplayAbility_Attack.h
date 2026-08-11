@@ -41,6 +41,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Attack")
 	TSubclassOf<UGameplayEffect> DamageEffect;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Attack")
+	TSubclassOf<UGameplayEffect> PostureDamageEffect;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Attack", meta = (ClampMin = "0.0"))
 	float RootMotionScale = 1.0f;
 	
