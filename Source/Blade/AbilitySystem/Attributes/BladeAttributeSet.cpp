@@ -16,11 +16,11 @@ void UBladeAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectM
 	
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
-			SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetMaxHealth()));
+		SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetMaxHealth()));
 	}
 	
 	if (Data.EvaluatedData.Attribute == GetPostureAttribute())
 	{
-			SetPosture(FMath::Clamp(GetPosture(), 0.0f, GetMaxPosture()));
+		SetPosture(FMath::Clamp(GetPosture(), 0.0f, GetMaxPosture()));
 	}
 }

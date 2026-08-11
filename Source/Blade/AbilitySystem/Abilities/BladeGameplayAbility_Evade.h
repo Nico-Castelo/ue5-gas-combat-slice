@@ -20,6 +20,11 @@ public:
 protected:
 
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
+	
+	virtual void OnMontageBlendOut() override;
+	
+	UFUNCTION()
+	void OnRecoveryStarted(FGameplayEventData Payload);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Evade")
 	TObjectPtr<UAnimMontage> EvadeMontage;
@@ -29,4 +34,7 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Evade", meta = (ClampMin = "0.0"))
 	float Rate = 1.5f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Evade", meta = (ClampMin = "0.0"))
+	float RecoveryCancelBlendOut = 0.1f;
 };
