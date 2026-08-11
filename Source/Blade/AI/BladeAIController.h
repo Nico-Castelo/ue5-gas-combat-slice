@@ -22,6 +22,4 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	TObjectPtr<UBehaviorTree> BehaviourTree;
-	
-	FName TargetActor = FName("TargetActor");
 };

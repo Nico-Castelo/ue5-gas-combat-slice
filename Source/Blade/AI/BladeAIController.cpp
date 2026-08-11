@@ -3,6 +3,7 @@
 
 #include "BladeAIController.h"
 
+#include "BladeGameTypes.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -23,6 +24,6 @@ void ABladeAIController::OnPossess(APawn* InPawn)
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
 	check(PlayerPawn);
 	
-	GetBlackboardComponent()->SetValueAsObject(TargetActor, PlayerPawn);
+	GetBlackboardComponent()->SetValueAsObject(NAME_TargetActor, PlayerPawn);
 }
 
