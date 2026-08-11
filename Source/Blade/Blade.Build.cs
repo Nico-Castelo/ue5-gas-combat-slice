@@ -10,7 +10,7 @@ public class Blade : ModuleRules
 		
 		PublicIncludePaths.Add("Blade");
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "GameplayAbilities", "GameplayTags", "GameplayTasks" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "GameplayAbilities", "GameplayTags", "GameplayTasks", "AIModule" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { "EnhancedInput" });
 
