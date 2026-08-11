@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "BladeCharacterBase.generated.h"
 
+class UGameplayEffect;
 struct FOnAttributeChangeData;
 class UBladeWeaponTraceComponent;
 class UGameplayAbility;
@@ -38,6 +39,9 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Ability System")
 	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Ability System")
+	TSubclassOf<UGameplayEffect> DefaultAttributeEffect;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Combat")
 	TObjectPtr<UStaticMeshComponent> WeaponMesh;

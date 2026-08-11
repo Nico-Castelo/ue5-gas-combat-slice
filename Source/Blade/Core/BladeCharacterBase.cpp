@@ -33,6 +33,12 @@ void ABladeCharacterBase::PossessedBy(AController* NewController)
 	ASC->GetGameplayAttributeValueChangeDelegate(UBladeAttributeSet::GetMoveSpeedAttribute())
 	.AddUObject(this, &ABladeCharacterBase::OnMoveSpeedChanged);
 	
+	FGameplayEffectSpecHandle SpecHandle = ASC->MakeOutgoingSpec(DefaultAttributeEffect, 1.0f, ASC->MakeEffectContext());
+	if (ensureMsgf(SpecHandle.IsValid(), TEXT("%s: GE_Init_Attributes not set in Blueprint"), *GetNameSafe(this)))
+	{
+		ASC->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+	}
+	
 	GetCharacterMovement()->MaxWalkSpeed = AttributeSet->GetMoveSpeed();
 	
 	for (const TSubclassOf<UGameplayAbility>& AbilityClass : DefaultAbilities)
