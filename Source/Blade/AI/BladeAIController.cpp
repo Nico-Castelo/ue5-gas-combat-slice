@@ -25,5 +25,7 @@ void ABladeAIController::OnPossess(APawn* InPawn)
 	check(PlayerPawn);
 	
 	GetBlackboardComponent()->SetValueAsObject(NAME_TargetActor, PlayerPawn);
+	
+	SetFocus(PlayerPawn);
 }
 
