@@ -31,7 +31,7 @@ void UBladeWeaponTraceComponent::BeginPlay()
 	
 	ABladeCharacterBase* Character = Cast<ABladeCharacterBase>(GetOwner());
 
-	if (!ensureMsgf(Character, TEXT("%s: el owner no es ABladeCharacterBase"), *GetName())) return;
+	if (!ensureMsgf(Character, TEXT("%s: the owner is not a BladeCharacterBase"), *GetName())) return;
 
 	WeaponMesh = Character->GetWeaponMesh();
 }
