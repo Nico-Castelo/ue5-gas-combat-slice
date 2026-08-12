@@ -47,6 +47,10 @@ void UBladeGameplayAbility_HitReact::ActivateAbility(const FGameplayAbilitySpecH
 		}
 		
 		PlayMontageAndEndOnCompletion(BlockHitMontage, Rate, RootMotionScale);
+
+		UE_LOG(LogGame, Verbose, TEXT("BlockedHit on %s from %s"),
+			*GetNameSafe(GetAvatarActorFromActorInfo()),
+			TriggerEventData ? *GetNameSafe(TriggerEventData->Instigator) : TEXT("Unknown"));
 		return;
 	}
 
@@ -68,7 +72,8 @@ void UBladeGameplayAbility_HitReact::ActivateAbility(const FGameplayAbilitySpecH
 
 	PlayMontageAndEndOnCompletion(HitReactMontage, Rate, RootMotionScale, Section);
 
-	UE_LOG(LogGame, Verbose, TEXT("HitReact: %s from %s"), *Section.ToString(), *GetNameSafe(TriggerEventData->Instigator));
+	UE_LOG(LogGame, Verbose, TEXT("HitReact: %s on %s from %s"),
+		*Section.ToString(), *GetNameSafe(GetAvatarActorFromActorInfo()), *GetNameSafe(TriggerEventData->Instigator));
 }
 
 EHitDirection UBladeGameplayAbility_HitReact::CalculateHitDirection(const AActor* Attacker) const

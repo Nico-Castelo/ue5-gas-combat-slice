@@ -42,7 +42,7 @@ void UBladeGameplayAbility_Evade::ActivateAbility(const FGameplayAbilitySpecHand
 
 	PlayMontageAndEndOnCompletion(EvadeMontage, Rate, RootMotionScale);
 
-	UE_LOG(LogGame, Verbose, TEXT("Evade Ability Activated"));
+	UE_LOG(LogGame, Verbose, TEXT("Evade activated on %s"), *GetNameSafe(GetAvatarActorFromActorInfo()));
 }
 
 void UBladeGameplayAbility_Evade::OnMontageBlendOut()

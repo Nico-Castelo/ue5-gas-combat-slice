@@ -5,7 +5,6 @@
 
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
-#include "Blade.h"
 #include "Abilities/GameplayAbilityTypes.h"
 
 void UBladeAnimNotifyState_SendGameplayEvent::NotifyBegin(USkeletalMeshComponent* MeshComp,
@@ -21,7 +20,6 @@ void UBladeAnimNotifyState_SendGameplayEvent::NotifyBegin(USkeletalMeshComponent
 	{
 		FGameplayEventData Payload;
 		ASC->HandleGameplayEvent(BeginEventTag, &Payload);
-		UE_LOG(LogGame, Verbose, TEXT("Send Gameplay Event: %s"), *BeginEventTag.ToString());
 	}
 }
 
@@ -38,6 +36,5 @@ void UBladeAnimNotifyState_SendGameplayEvent::NotifyEnd(USkeletalMeshComponent* 
 	{
 		FGameplayEventData Payload;
 		ASC->HandleGameplayEvent(EndEventTag, &Payload);
-		UE_LOG(LogGame, Verbose, TEXT("Send Gameplay Event: %s"), *EndEventTag.ToString());
 	}
 }

@@ -62,7 +62,7 @@ void UBladeGameplayAbility_Attack::ActivateAbility(const FGameplayAbilitySpecHan
 	
 	PlayMontageAndEndOnCompletion(AttackMontage, Rate, RootMotionScale);
 	
-	UE_LOG(LogGame, Verbose, TEXT("Attack Ability Activated"));
+	UE_LOG(LogGame, Verbose, TEXT("Attack activated on %s"), *GetNameSafe(GetAvatarActorFromActorInfo()));
 }
 
 void UBladeGameplayAbility_Attack::EndAbility(const FGameplayAbilitySpecHandle Handle,
@@ -123,10 +123,10 @@ void UBladeGameplayAbility_Attack::OnWeaponHit(FGameplayEventData Payload)
 	HitReceivedPayload.Target = Payload.Target;
 	TargetASC->HandleGameplayEvent(BladeGameplayTags::Event_Combat_HitReceived, &HitReceivedPayload);
 
-	
-	UE_LOG(LogGame, Verbose, TEXT("Applied %s to %s - Health now %.0f"),
-	*GetNameSafe(DamageEffect), *GetNameSafe(Payload.Target),
-	TargetASC->GetNumericAttribute(UBladeAttributeSet::GetHealthAttribute()));
+	UE_LOG(LogGame, Verbose, TEXT("Hit resolved: %s -> %s - Health now %.0f, Posture now %.0f"),
+		*GetNameSafe(GetAvatarActorFromActorInfo()), *GetNameSafe(Payload.Target),
+		TargetASC->GetNumericAttribute(UBladeAttributeSet::GetHealthAttribute()),
+		TargetASC->GetNumericAttribute(UBladeAttributeSet::GetPostureAttribute()));
 }
 
 UBladeWeaponTraceComponent* UBladeGameplayAbility_Attack::GetWeaponTrace() const

@@ -67,8 +67,6 @@ void UBladeWeaponTraceComponent::TickComponent(float DeltaTime, ELevelTick TickT
 		{
 			ASC->HandleGameplayEvent(BladeGameplayTags::Event_Combat_HitDealt, &Payload);
 		}
-		
-		UE_LOG(LogGame, Verbose, TEXT("Weapon hit: %s"), *HitActor->GetName());
 	}
 }
 
