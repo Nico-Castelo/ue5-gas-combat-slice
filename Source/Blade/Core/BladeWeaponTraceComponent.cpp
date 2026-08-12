@@ -59,7 +59,7 @@ void UBladeWeaponTraceComponent::TickComponent(float DeltaTime, ELevelTick TickT
 		
 		HitActors.Add(HitActor);
 		
-		FGameplayEventData Payload;
+		FGameplayEventData Payload;	
 		Payload.Instigator = GetOwner();
 		Payload.Target = HitActor;
 		
