@@ -60,6 +60,6 @@ void ABladeCharacterBase::Death(const FGameplayTag Tag, int32 NewCount)
 {
 	if (NewCount == 0) return;
 	
-	DisableInput(Cast<APlayerController>(GetController()));
+	GetController()->SetIgnoreMoveInput(true);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
 }
