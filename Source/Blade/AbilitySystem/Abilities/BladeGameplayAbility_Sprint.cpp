@@ -14,6 +14,7 @@ UBladeGameplayAbility_Sprint::UBladeGameplayAbility_Sprint()
 	
 	ActivationOwnedTags.AddTag(BladeGameplayTags::State_Sprinting);
 	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Blocking);
+	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Dead);
 }
 
 void UBladeGameplayAbility_Sprint::ActivateAbility(const FGameplayAbilitySpecHandle Handle,

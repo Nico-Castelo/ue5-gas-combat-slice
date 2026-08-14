@@ -4,8 +4,10 @@
 #include "BladeCharacterBase.h"
 
 #include "AbilitySystemComponent.h"
+#include "BladeGameplayTags.h"
 #include "BladeWeaponTraceComponent.h"
 #include "AbilitySystem/Attributes/BladeAttributeSet.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -33,6 +35,8 @@ void ABladeCharacterBase::PossessedBy(AController* NewController)
 	ASC->GetGameplayAttributeValueChangeDelegate(UBladeAttributeSet::GetMoveSpeedAttribute())
 	.AddUObject(this, &ABladeCharacterBase::OnMoveSpeedChanged);
 	
+	ASC->RegisterGameplayTagEvent(BladeGameplayTags::State_Dead).AddUObject(this, &ABladeCharacterBase::Death);
+	
 	FGameplayEffectSpecHandle SpecHandle = ASC->MakeOutgoingSpec(DefaultAttributeEffect, 1.0f, ASC->MakeEffectContext());
 	if (ensureMsgf(SpecHandle.IsValid(), TEXT("%s: GE_Init_Attributes not set in Blueprint"), *GetNameSafe(this)))
 	{
@@ -50,4 +54,12 @@ void ABladeCharacterBase::PossessedBy(AController* NewController)
 void ABladeCharacterBase::OnMoveSpeedChanged(const FOnAttributeChangeData& Data)
 {
 	GetCharacterMovement()->MaxWalkSpeed = Data.NewValue;
+}
+
+void ABladeCharacterBase::Death(const FGameplayTag Tag, int32 NewCount)
+{
+	if (NewCount == 0) return;
+	
+	DisableInput(Cast<APlayerController>(GetController()));
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
 }

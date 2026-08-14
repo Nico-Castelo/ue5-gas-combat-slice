@@ -16,6 +16,7 @@ UBladeGameplayAbility_HitReact::UBladeGameplayAbility_HitReact()
 
 	ActivationOwnedTags.AddTag(BladeGameplayTags::State_HitReacting);
 	ActivationBlockedTags.AddTag(BladeGameplayTags::State_HitReacting);
+	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Dead);
 
 	CancelAbilitiesWithTag.AddTag(BladeGameplayTags::Ability_Attack);
 	CancelAbilitiesWithTag.AddTag(BladeGameplayTags::Ability_Evade);

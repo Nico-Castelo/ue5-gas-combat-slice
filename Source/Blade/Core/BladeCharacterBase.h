@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
+#include "GameplayTagContainer.h"
 #include "GameFramework/Character.h"
 #include "BladeCharacterBase.generated.h"
 
@@ -30,6 +31,8 @@ public:
 protected:
 	
 	void OnMoveSpeedChanged(const FOnAttributeChangeData& Data);
+	
+	void Death(const FGameplayTag Tag, int32 NewCount);
 	
 	UPROPERTY(VisibleAnywhere, Category = "Ability System")
 	TObjectPtr<UAbilitySystemComponent> ASC;

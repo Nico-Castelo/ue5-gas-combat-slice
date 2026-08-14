@@ -16,6 +16,7 @@ UBladeGameplayAbility_Block::UBladeGameplayAbility_Block()
 	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Attacking_Committed);
 	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Evading);
 	ActivationBlockedTags.AddTag(BladeGameplayTags::State_HitReacting);
+	ActivationBlockedTags.AddTag(BladeGameplayTags::State_Dead);
 	CancelAbilitiesWithTag.AddTag(BladeGameplayTags::Ability_Sprint);
 }
 

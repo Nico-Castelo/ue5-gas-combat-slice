@@ -6,11 +6,13 @@ namespace BladeGameplayTags
 {	
 	
 	// Ability tags
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Ability);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Ability_Attack);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Ability_Evade);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Ability_HitReact);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Ability_Block);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Ability_Sprint);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Ability_Death);
 	
 	// State tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Attacking);
@@ -19,6 +21,7 @@ namespace BladeGameplayTags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_HitReacting);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Blocking);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Sprinting);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Dead);
 	
 	// Event tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Event_Montage_Recover);
@@ -27,4 +30,5 @@ namespace BladeGameplayTags
 	
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Event_Combat_HitDealt);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Event_Combat_HitReceived);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Event_Combat_Death);
 }
