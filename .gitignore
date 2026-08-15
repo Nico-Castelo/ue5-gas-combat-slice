@@ -52,6 +52,7 @@ Content/SlashTrail_SoftTofu/
 *.xcodeproj
 *.xcworkspace
 *.sln
+*.slnx
 *.suo
 *.opensdf
 *.sdf
@@ -90,3 +91,7 @@ Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Per-user editor content (bookmarks, local collections)
+Content/Developers/
+Content/Collections/
