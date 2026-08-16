@@ -33,7 +33,7 @@ The main goal of the project is to build a strong understanding of the Gameplay 
 * Executions
 * Lock-on and directional strafe movement (in progress)
 
-I intentionally want to keep the planned feature list limited until the main gameplay combat loop is finished. I prefer a polished core loop over a long feature list.
+I intentionally want to keep the planned feature list limited until the main gameplay combat loop is finished. I prefer a polished core loop first and then keep adding sekiro-like features.
 
 # Credits
 
